@@ -20,7 +20,9 @@ public class UserDaoImpl implements Dao<User>{
     public List<User> getAllElements() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
         List<User> users = em.createQuery("SELECT u FROM User u", User.class).getResultList();
+        em.getTransaction().commit();
         em.close();
         return users;
     }
@@ -30,6 +32,7 @@ public class UserDaoImpl implements Dao<User>{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
         User user = em.find(User.class, id);
+        em.close();
         return user;
     }
 
@@ -39,20 +42,7 @@ public class UserDaoImpl implements Dao<User>{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        User foundUser = em.find(User.class, id);
-        //System.out.println("user details id "+ user.getUserDetails().getUserDetailsId());
-        //UserDetails userDetails = em.find(UserDetails.class, user.getUserDetails().getUserDetailsId());
-        //em.merge(user.getUserDetails());
-        //Long id = user.getUserDetails().getUserDetailsId();
-       // UserDetails userDetails = user.getUserDetails();
-        //foundUser.setEmail(user.getEmail());
-        foundUser.setPassword(user.getPassword());
-        foundUser.getUserDetails().setFirstName(user.getUserDetails().getFirstName());
-        foundUser.getUserDetails().setLastName(user.getUserDetails().getLastName());
-        foundUser.getUserDetails().setPhoneNumber(user.getUserDetails().getPhoneNumber());
-        //em.merge(user.getUserDetails());
-        //foundUser.setUserDetails(user.getUserDetails());
-        em.merge(foundUser);
+        em.merge(user);
         em.getTransaction().commit();
         em.close();
     }
