@@ -26,7 +26,7 @@ public class ProductDaoImpl implements Dao<Product>{
     }
 
     @Override
-    public Product getElementById(long id) {
+    public Product getElementById(Long id) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
         Product product = em.find(Product.class, id);
@@ -42,12 +42,13 @@ public class ProductDaoImpl implements Dao<Product>{
         foundProduct.setProductName(product.getProductName());
         foundProduct.setProductType(product.getProductType());
         foundProduct.setPrice(product.getPrice());
+        foundProduct.setUsers(product.getUsers());
         em.getTransaction().commit();
         em.close();
     }
 
     @Override
-    public void deleteElement(long id) {
+    public void deleteElement(Long id) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();

@@ -3,9 +3,9 @@ package jdbcDao;
 import java.util.List;
 
 public interface ShoppingCartDao {
-    public String addProduct(ShoppingCart cart);
-    public String deleteProduct(ShoppingCart cart);
-    public List<Long> getUserProducts(Long userId);
+    public String addProduct(Long userId, Long productId);
+    public String deleteProduct(Long userId, Long productId);
+    public List<Product> getUserProducts(Long userId);
     public String deleteUserProducts(Long userId);
 
 }

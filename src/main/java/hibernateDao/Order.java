@@ -8,21 +8,27 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    private long orderId;
-    @ManyToOne(fetch = FetchType.LAZY)
+    private Long orderId;
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
     private String products;
     @Column(name = "products_price")
-    private double productsPrice;
+    private Double productsPrice;
     @Column(name = "order_time")
     private String orderTime;
 
-    public long getOrderId() {
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(long orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
@@ -34,11 +40,11 @@ public class Orders {
         this.products = products;
     }
 
-    public double getProductsPrice() {
+    public Double getProductsPrice() {
         return productsPrice;
     }
 
-    public void setProductsPrice(double productsPrice) {
+    public void setProductsPrice(Double productsPrice) {
         this.productsPrice = productsPrice;
     }
 
