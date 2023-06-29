@@ -1,7 +1,7 @@
 package jdbcDao;
 
 
-public class Orders {
+public class Order {
     private Long orderId;
     private Long userId;
     private String products;

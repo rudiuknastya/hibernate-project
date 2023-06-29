@@ -10,13 +10,13 @@ public class ShoppingCartDaoImplTest {
     ShoppingCartDao shoppingCartDao = new ShoppingCartDaoImpl();
     @Test
     public void addProductToCart(){
-        shoppingCartDao.addProduct(2L, 21L);
-//        Dao<User> userDao = new UserDaoImpl();
-//        User user = userDao.getElementById(2L);
-//        Dao<Product> productDaoDao = new ProductDaoImpl();
-//        Product product = productDaoDao.getElementById(8L);
-//        assertEquals(2, product.getUsers().size());
-//        assertEquals(2, user.getProducts().size());
+        shoppingCartDao.addProduct(1L, 4L);
+        Dao<User> userDao = new UserDaoImpl();
+        User user = userDao.getElementById(2L);
+        Dao<Product> productDaoDao = new ProductDaoImpl();
+        Product product = productDaoDao.getElementById(8L);
+        assertEquals(2, product.getUsers().size());
+        assertEquals(2, user.getProducts().size());
     }
     @Test
     public void deleteProductFromCart(){

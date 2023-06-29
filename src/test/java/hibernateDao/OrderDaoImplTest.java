@@ -8,8 +8,8 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class OrdersDaoImplTest {
-    OrdersDao ordersDao = new OrdersDaoImpl();
+public class OrderDaoImplTest {
+    OrderDao ordersDao = new OrderDaoImpl();
 
     @Test
     public void addOrder(){

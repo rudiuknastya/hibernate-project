@@ -2,8 +2,8 @@ package jdbcDao;
 
 import java.util.List;
 
-public interface OrdersDao {
-    public void addOrder(Orders order);
-    public List<Orders> getUserOrders(Long userId);
-    public List<Orders> getAllOrders();
+public interface OrderDao {
+    public void addOrder(Order order);
+    public List<Order> getUserOrders(Long userId);
+    public List<Order> getAllOrders();
 }

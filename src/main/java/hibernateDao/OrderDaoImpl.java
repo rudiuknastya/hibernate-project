@@ -5,7 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
 
-public class OrdersDaoImpl implements OrdersDao{
+public class OrderDaoImpl implements OrderDao {
     @Override
     public void addOrder(Order order) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");

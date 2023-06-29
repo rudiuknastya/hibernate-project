@@ -1,10 +1,14 @@
 package jdbcDao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDaoImpl implements Dao<Product>{
+    private Logger logger = LogManager.getLogger("jdbc-logger");
     @Override
     public void addNewElement(Product product) {
         String query = "INSERT INTO products(product_name, product_type, price) VALUES (?,?,?);";
@@ -16,8 +20,9 @@ public class ProductDaoImpl implements Dao<Product>{
             preparedStatement.setDouble(3, product.getPrice());
             preparedStatement.executeUpdate();
             connection.close();
-
+            logger.info("Product added");
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -39,7 +44,9 @@ public class ProductDaoImpl implements Dao<Product>{
                 products.add(product);
             }
             connection.close();
+            logger.info("Got all products. List size: "+products.size());
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
         return products;
@@ -61,7 +68,9 @@ public class ProductDaoImpl implements Dao<Product>{
                 product.setPrice(result.getDouble(4));
             }
             connection.close();
+            logger.info("Got product. Id: "+product.getProductId()+" Name: "+product.getProductName()+" Type: "+product.getProductType()+" Price: "+product.getPrice());
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
         return product;
@@ -79,7 +88,9 @@ public class ProductDaoImpl implements Dao<Product>{
             preparedStatement.setLong(4,product.getProductId());
             preparedStatement.executeUpdate();
             connection.close();
+            logger.info("Product updated");
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -93,7 +104,9 @@ public class ProductDaoImpl implements Dao<Product>{
             preparedStatement.setLong(1,id);
             preparedStatement.executeUpdate();
             connection.close();
+            logger.info("Product deleted");
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }

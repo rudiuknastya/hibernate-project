@@ -8,33 +8,26 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ShoppingCartDaoTest {
+    ShoppingCartDao shoppingCartDao = new ShoppingCartDaoImpl();
     @Test
     public void addProductInCart() throws SQLException {
-        ShoppingCartDao shoppingCartDao = new ShoppingCartDaoImpl();
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setUserId(3L);
-        shoppingCart.setProductId(12L);
-        //assertEquals("Added",shoppingCartDao.addProduct(shoppingCart));
-
+        shoppingCartDao.addProduct(4L, 18L);
     }
     @Test
     public void deleteProductFromCart() throws SQLException {
-        ShoppingCartDao shoppingCartDao = new ShoppingCartDaoImpl();
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setUserId(3L);
-        shoppingCart.setProductId(12L);
-        //assertEquals("Deleted",shoppingCartDao.deleteProduct(shoppingCart));
+        shoppingCartDao.deleteProduct(1L, 24L);
     }
     @Test
     public void getUserProducts() throws SQLException {
-        ShoppingCartDao shoppingCartDao = new ShoppingCartDaoImpl();
-        List<Product> products = shoppingCartDao.getUserProducts(1L);
+        List<Product> products = shoppingCartDao.getUserProducts(4L);
         assertEquals(3,products.size());
+        assertEquals("LG 32LQ630B6LA", products.get(0).getProductName());
+        assertEquals("smartphone",products.get(1).getProductType());
+        assertEquals(2.0,products.get(2).getPrice(),0);
     }
     @Test
     public void deleteUserProducts() throws SQLException {
-        ShoppingCartDao shoppingCartDao = new ShoppingCartDaoImpl();
-        assertEquals("Deleted",shoppingCartDao.deleteUserProducts(5L));
+        shoppingCartDao.deleteUserProducts(4L);
     }
 
 

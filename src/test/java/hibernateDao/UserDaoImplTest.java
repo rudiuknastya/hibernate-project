@@ -12,11 +12,11 @@ public class UserDaoImplTest {
     public void insertUser(){
         User user = new User();
         UserDetails userDetails = new UserDetails();
-        userDetails.setLastName("Rudiuk");
-        userDetails.setFirstName("Nastya");
-        userDetails.setPhoneNumber("380996354821");
-        user.setEmail("nastya@gmail.com");
-        user.setPassword("fsjfj37");
+        userDetails.setLastName("Jack");
+        userDetails.setFirstName("Harrlow");
+        userDetails.setPhoneNumber("380953976133");
+        user.setEmail("jack@gmail.com");
+        user.setPassword("njags5");
         user.setUserDetails(userDetails);
         userDao.addNewElement(user);
     }
@@ -25,17 +25,18 @@ public class UserDaoImplTest {
         List<User> users = userDao.getAllElements();
         assertEquals(9, users.size());
         assertNotNull(users.get(7));
-        assertEquals("molkjh@gmail.com", users.get(2).getEmail());
+        assertEquals("molkjh@gmail.com", users.get(1).getEmail());
         assertEquals("fsjfj37", users.get(8).getPassword());
 
     }
 
     @Test
     public void getUserById(){
-        User user = userDao.getElementById(5L);
+        User user = userDao.getElementById(8L);
         assertNotNull(user);
-        assertEquals("fytrtd43@gmail.com", user.getEmail());
-        assertEquals("483ehbikbk", user.getPassword());
+        assertEquals("cngdg@gmail.com", user.getEmail());
+        assertEquals("madvgb", user.getPassword());
+        assertEquals("Anna", user.getUserDetails().getFirstName());
     }
 
     @Test
@@ -43,8 +44,21 @@ public class UserDaoImplTest {
         User user = userDao.getElementById(11L);
         assertNull(user);
     }
+    @Test
+    public void updateUser(){
+        UserDetails userDetails = new UserDetails();
+        userDetails.setFirstName("Anna");
+        userDetails.setLastName("Croft");
+        userDetails.setPhoneNumber("380991542388");
+        User user = new User();
+        user.setUserId(8L);
+        user.setPassword("madvgb");
+        user.setUserDetails(userDetails);
+        userDao.updateElement(user);
+    }
 
-    // update element think about user details
-
-    // delete
+    @Test
+    public void deleteUser(){
+        userDao.deleteElement(12L);
+    }
 }

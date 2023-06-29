@@ -7,8 +7,18 @@ import javax.persistence.Persistence;
 
 public class App {
     public static void main(String[] args) {
-        OrderService orderService = new OrderService();
-        orderService.order(2L);
+//        OrderService orderService = new OrderService();
+//        orderService.order(2L);
+        Dao<User> userDao = new UserDaoImpl();
+        UserDetails userDetails = new UserDetails();
+        userDetails.setFirstName("Lara");
+        userDetails.setLastName("Croft");
+        userDetails.setPhoneNumber("380991542388");
+        User user = new User();
+        user.setUserId(8L);
+        user.setPassword("181818");
+        user.setUserDetails(userDetails);
+        userDao.updateElement(user);
 //        Dao<User> userDao = new UserDaoImpl();
 //        User user = new User();
 //        user.setEmail("ponbtd@gmail.com");

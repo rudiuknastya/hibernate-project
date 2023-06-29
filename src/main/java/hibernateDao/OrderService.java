@@ -19,17 +19,22 @@ public class OrderService {
             }
             productsPrice += product.getPrice();
         }
-        OrdersDao ordersDao = new OrdersDaoImpl();
+        OrderDao ordersDao = new OrderDaoImpl();
         Dao<User> userDao = new UserDaoImpl();
         User user = userDao.getElementById(userId);
-        Orders order = new Orders();
+        Order order = createOrder(user, products, productsPrice);
+        ordersDao.addOrder(order);
+        shoppingCartDao.deleteAllUserProducts(userId);
+    }
+
+    private Order createOrder(User user, String products, Double productsPrice){
+        Order order = new Order();
         order.setUser(user);
         order.setProducts(products);
         order.setProductsPrice(productsPrice);
         LocalDateTime myDate = LocalDateTime.now();
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         order.setOrderTime(myDate.format(myFormatObj));
-        ordersDao.addOrder(order);
-        shoppingCartDao.deleteAllUserProducts(userId);
+        return order;
     }
 }

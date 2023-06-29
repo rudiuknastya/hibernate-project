@@ -7,10 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrdersDaoImpl implements OrdersDao{
+public class OrderDaoImpl implements OrderDao {
 
     private Logger logger = LogManager.getLogger("jdbc-logger");
-    public void addOrder(Orders order){
+    public void addOrder(Order order){
         String query = "INSERT INTO orders(user_id, products, products_price, order_time) VALUES (?,?,?,?);";
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop","nastya","anastasiia");
@@ -27,8 +27,8 @@ public class OrdersDaoImpl implements OrdersDao{
            throw new RuntimeException(e);
         }
     }
-    public List<Orders> getUserOrders(Long userId){
-        List<Orders> userOrders = new ArrayList<>();
+    public List<Order> getUserOrders(Long userId){
+        List<Order> userOrders = new ArrayList<>();
         String query = "SELECT * FROM orders WHERE user_id=?;";
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop","nastya","anastasiia");
@@ -36,7 +36,7 @@ public class OrdersDaoImpl implements OrdersDao{
             preparedStatement.setLong(1,userId);
             ResultSet result = preparedStatement.executeQuery();
             while(result.next()){
-                Orders order = new Orders();
+                Order order = new Order();
                 order.setOrderId(result.getLong(1));
                 order.setUserId(result.getLong(2));
                 order.setProducts(result.getString(3));
@@ -55,15 +55,15 @@ public class OrdersDaoImpl implements OrdersDao{
     }
 
     @Override
-    public List<Orders> getAllOrders() {
-        List<Orders> orders = new ArrayList<>();
+    public List<Order> getAllOrders() {
+        List<Order> orders = new ArrayList<>();
         String query = "SELECT * FROM orders;";
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop","nastya","anastasiia");
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
             while(result.next()){
-                Orders order = new Orders();
+                Order order = new Order();
                 order.setOrderId(result.getLong(1));
                 order.setUserId(result.getLong(2));
                 order.setProducts(result.getString(3));

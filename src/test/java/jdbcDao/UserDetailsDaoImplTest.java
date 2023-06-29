@@ -8,41 +8,23 @@ import static org.junit.Assert.*;
 
 public class UserDetailsDaoImplTest {
     private UserDetailsDaoImpl userDetailsDao = new UserDetailsDaoImpl();
+
     @Test
-    public void addUserDetails(){
-        UserDetails userDetails = new UserDetails();
-        userDetails.setFirstName("Ann");
-        userDetails.setLastName("Sandly");
-        userDetails.setPhoneNumber("380664572248");
-        userDetailsDao.addNewElement(userDetails);
+    public void getAllUserDetails() {
+        List<UserDetails> userDetailsList = userDetailsDao.getAllUserDetails();
+        assertEquals(8, userDetailsList.size());
+        assertEquals("Jerry", userDetailsList.get(4).getFirstName());
+        assertEquals("Jane", userDetailsList.get(7).getLastName());
+        assertEquals("380981653425", userDetailsList.get(0).getPhoneNumber());
     }
+
     @Test
-    public void getAllUserDetailsCompareSize(){
-        List<UserDetails> userDetailsList = userDetailsDao.getAllElements();
-        assertEquals(7, userDetailsList.size());
+    public void getUserDetailsById() {
+        UserDetails userDetails = userDetailsDao.getUserDetails(5L);
+        assertEquals("Linda", userDetails.getFirstName());
+        assertEquals("Lawrence", userDetails.getLastName());
+        assertEquals("380956437813", userDetails.getPhoneNumber());
     }
-    @Test
-    public void getAllUserDetailsCompareFirstName(){
-        List<UserDetails> userDetailsList = userDetailsDao.getAllElements();
-        assertEquals("Jerry", userDetailsList.get(5).getFirstName());
-    }
-    @Test
-    public void getUserDetailsByIdCompareLastName(){
-        UserDetails userDetails = userDetailsDao.getElementById(2L);
-        assertEquals("Thompson", userDetails.getLastName());
-    }
-    @Test
-    public void updateUserDetails(){
-        UserDetails userDetails = new UserDetails();
-        userDetails.setUserDetailsId(9L);
-        userDetails.setFirstName("Ann");
-        userDetails.setLastName("Sandler");
-        userDetails.setPhoneNumber("380664572248");
-        userDetailsDao.updateElement(userDetails);
-    }
-    @Test
-    public void deleteUserDetails(){
-        userDetailsDao.deleteElement(9L);
-    }
+
 
 }
