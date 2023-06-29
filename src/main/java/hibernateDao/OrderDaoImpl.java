@@ -20,15 +20,22 @@ public class OrderDaoImpl implements OrderDao {
     public List<Order> getUserOrders(Long userId) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
         User user = em.find(User.class, userId);
-        return user.getOrders();
+        List<Order> userOrders = user.getOrders();
+        userOrders.get(0);
+        em.getTransaction().commit();
+        em.close();
+        return userOrders;
     }
 
     @Override
     public List<Order> getAllOrders() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
-        List<Order> orders = em.createQuery("SELECT o FROM Orders o", Order.class).getResultList();
+        em.getTransaction().begin();
+        List<Order> orders = em.createQuery("SELECT o FROM Order o left join fetch o.user", Order.class).getResultList();
+        em.getTransaction().commit();
         em.close();
         return orders;
     }

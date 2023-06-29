@@ -37,7 +37,12 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao{
     public List<Product> getUserProducts(Long userId) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
         User user = em.find(User.class, userId);
+        List<Product> userProducts = user.getProducts();
+        userProducts.get(0);
+        em.getTransaction().commit();
+        em.close();
         return user.getProducts();
     }
 

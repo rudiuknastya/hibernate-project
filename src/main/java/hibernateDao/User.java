@@ -13,10 +13,10 @@ public class User {
     private String email;
     @Column(name = "pasword")
     private String password;
-    @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_details")
     private UserDetails userDetails;
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = { CascadeType.PERSIST})
     @JoinTable(
             name = "shopping_cart",
             joinColumns = { @JoinColumn(name = "user_id") },
