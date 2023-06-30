@@ -32,9 +32,7 @@ public class OrderService {
         order.setUser(user);
         order.setProducts(products);
         order.setProductsPrice(productsPrice);
-        LocalDateTime myDate = LocalDateTime.now();
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        order.setOrderTime(myDate.format(myFormatObj));
+        order.setOrderTime(LocalDateTime.now());
         return order;
     }
 }

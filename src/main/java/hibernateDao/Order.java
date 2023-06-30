@@ -4,6 +4,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders")
@@ -19,7 +20,7 @@ public class Order {
     @Column(name = "products_price")
     private Double productsPrice;
     @Column(name = "order_time")
-    private String orderTime;
+    private LocalDateTime orderTime;
 
     public User getUser() {
         return user;
@@ -51,11 +52,11 @@ public class Order {
         this.productsPrice = productsPrice;
     }
 
-    public String getOrderTime() {
+    public LocalDateTime getOrderTime() {
         return orderTime;
     }
 
-    public void setOrderTime(String orderTime) {
+    public void setOrderTime(LocalDateTime orderTime) {
         this.orderTime = orderTime;
     }
 }
