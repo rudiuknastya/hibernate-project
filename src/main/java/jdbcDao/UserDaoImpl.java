@@ -131,13 +131,28 @@ public class UserDaoImpl implements Dao<User>{
 
     @Override
     public void deleteElement(Long id) {
-        String query = "DELETE u, ud FROM users u " +
-                "INNER JOIN user_details ud ON u.user_details = ud.user_details_id where u.user_id = ?;";
+        String selectUserDetails = "SELECT user_details FROM users WHERE user_id = ?;";
+        String query = "delete from user_details where user_details_id = ?;";
+        String deleteOrdersQuery = "DELETE FROM orders where orders.user_id = ?;";
+        ShoppingCartDao shoppingCartDao = new ShoppingCartDaoImpl();
+        shoppingCartDao.deleteUserProducts(id);
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop", "nastya", "anastasiia");
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteOrdersQuery);
             preparedStatement.setLong(1,id);
             preparedStatement.executeUpdate();
+
+            PreparedStatement preparedStatement1 = connection.prepareStatement(selectUserDetails);
+            preparedStatement1.setLong(1, id);
+            ResultSet result = preparedStatement1.executeQuery();
+            Long udId = null;
+            while (result.next()) {
+                udId = result.getLong(1);
+            }
+
+            PreparedStatement preparedStatement2 = connection.prepareStatement(query);
+            preparedStatement2.setLong(1,udId);
+            preparedStatement2.executeUpdate();
             connection.close();
             logger.info("User and UserDetails deleted");
         } catch (SQLException e) {
