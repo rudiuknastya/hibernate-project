@@ -1,30 +1,10 @@
-package hibernateDao;
+package jdbcDao;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
-@Table(name = "products")
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
     private Long productId;
-    @Column(name = "product_name")
     private String productName;
-    @Column(name = "product_type")
     private String productType;
     private Double price;
-    @ManyToMany(mappedBy = "products")
-    List<User> users = new ArrayList<>();
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
 
     public Long getProductId() {
         return productId;

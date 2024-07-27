@@ -1,4 +1,4 @@
-package hibernateDao;
+package jdbcDao;
 
 import java.util.List;
 

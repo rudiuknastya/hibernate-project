@@ -8,7 +8,7 @@ public class UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_details_id")
-    private long userDetailsId;
+    private Long userDetailsId;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -16,17 +16,11 @@ public class UserDetails {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    public UserDetails(int userDetailsId, String firstName, String lastName, String phoneNumber) {
-        this.userDetailsId = userDetailsId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-    }
     public UserDetails(){
 
     }
 
-    public void setUserDetailsId(int userDetailsId) {
+    public void setUserDetailsId(Long userDetailsId) {
         this.userDetailsId = userDetailsId;
     }
 
@@ -42,7 +36,7 @@ public class UserDetails {
         this.phoneNumber = phoneNumber;
     }
 
-    public long getUserDetailsId() {
+    public Long getUserDetailsId() {
         return userDetailsId;
     }
 

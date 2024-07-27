@@ -10,8 +10,8 @@
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/shop"/>
-            <property name="jakarta.persistence.jdbc.user" value="nastya"/>
-            <property name="jakarta.persistence.jdbc.password" value="anastasiia"/>
+            <property name="jakarta.persistence.jdbc.user" value=""/>
+            <property name="jakarta.persistence.jdbc.password" value=""/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>

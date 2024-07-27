@@ -9,20 +9,38 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private long userId;
+    private Long userId;
     private String email;
     @Column(name = "pasword")
     private String password;
-    @OneToOne // cascade type all
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_details")
     private UserDetails userDetails;
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = { CascadeType.PERSIST})
     @JoinTable(
             name = "shopping_cart",
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "product_id") }
     )
-    private Set<Product> products = new HashSet<>();
+    private List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 
     public User(Long userId, String email, String password, UserDetails userDetails) {
         this.userId = userId;

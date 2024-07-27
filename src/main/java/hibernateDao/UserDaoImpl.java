@@ -20,34 +20,35 @@ public class UserDaoImpl implements Dao<User>{
     public List<User> getAllElements() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
         List<User> users = em.createQuery("SELECT u FROM User u", User.class).getResultList();
+        em.getTransaction().commit();
         em.close();
         return users;
     }
 
     @Override
-    public User getElementById(long id) {
+    public User getElementById(Long id) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
         User user = em.find(User.class, id);
+        em.close();
         return user;
     }
 
     @Override
     public void updateElement(User user) {
+        Long id = user.getUserId();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        User foundUser = em.find(User.class, user.getUserId());
-        foundUser.setEmail(user.getEmail());
-        foundUser.setPassword(user.getPassword());
-        foundUser.setUserDetails(user.getUserDetails());
+        em.merge(user);
         em.getTransaction().commit();
         em.close();
     }
 
     @Override
-    public void deleteElement(long id) {
+    public void deleteElement(Long id) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();

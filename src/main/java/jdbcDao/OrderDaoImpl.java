@@ -1,17 +1,19 @@
 package jdbcDao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrdersDaoImpl implements OrdersDao{
-    private Connection connection; // = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop","nastya","anastasiia");
-    public OrdersDaoImpl() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop","nastya","anastasiia");
-    }
-    public String addOrder(Orders order){
+public class OrderDaoImpl implements OrderDao {
+
+    private Logger logger = LogManager.getLogger("jdbc-logger");
+    public void addOrder(Order order){
         String query = "INSERT INTO orders(user_id, products, products_price, order_time) VALUES (?,?,?,?);";
         try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop","nastya","anastasiia");
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1,order.getUserId());
             preparedStatement.setString(2, order.getProducts());
@@ -19,21 +21,22 @@ public class OrdersDaoImpl implements OrdersDao{
             preparedStatement.setString(4,order.getOrderTime());
             preparedStatement.executeUpdate();
             connection.close();
-            return "Added";
+            logger.info("Order added");
         } catch (SQLException e) {
-            return "Not Added";
-            //throw new RuntimeException(e);
+            logger.error(e.getMessage());
+           throw new RuntimeException(e);
         }
     }
-    public List<Orders> getUserOrders(long userId){
-        List<Orders> userOrders = new ArrayList<>();
+    public List<Order> getUserOrders(Long userId){
+        List<Order> userOrders = new ArrayList<>();
         String query = "SELECT * FROM orders WHERE user_id=?;";
         try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop","nastya","anastasiia");
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1,userId);
             ResultSet result = preparedStatement.executeQuery();
             while(result.next()){
-                Orders order = new Orders();
+                Order order = new Order();
                 order.setOrderId(result.getLong(1));
                 order.setUserId(result.getLong(2));
                 order.setProducts(result.getString(3));
@@ -43,21 +46,24 @@ public class OrdersDaoImpl implements OrdersDao{
 
             }
             connection.close();
+            logger.info("Got user orders. List size: "+userOrders.size());
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
         return userOrders;
     }
 
     @Override
-    public List<Orders> getAllOrders() {
-        List<Orders> orders = new ArrayList<>();
+    public List<Order> getAllOrders() {
+        List<Order> orders = new ArrayList<>();
         String query = "SELECT * FROM orders;";
         try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop","nastya","anastasiia");
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
             while(result.next()){
-                Orders order = new Orders();
+                Order order = new Order();
                 order.setOrderId(result.getLong(1));
                 order.setUserId(result.getLong(2));
                 order.setProducts(result.getString(3));
@@ -66,7 +72,9 @@ public class OrdersDaoImpl implements OrdersDao{
                 orders.add(order);
             }
             connection.close();
+            logger.info("Got user orders. List size: "+orders.size());
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
         return orders;

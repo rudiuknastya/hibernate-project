@@ -1,26 +1,26 @@
 package jdbcDao;
 
 
-public class Orders {
-    private long orderId;
-    private long userId;
+public class Order {
+    private Long orderId;
+    private Long userId;
     private String products;
-    private double productsPrice;
+    private Double productsPrice;
     private String orderTime;
 
-    public long getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(long orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -32,11 +32,11 @@ public class Orders {
         this.products = products;
     }
 
-    public double getProductsPrice() {
+    public Double getProductsPrice() {
         return productsPrice;
     }
 
-    public void setProductsPrice(double productsPrice) {
+    public void setProductsPrice(Double productsPrice) {
         this.productsPrice = productsPrice;
     }
 
@@ -47,9 +47,5 @@ public class Orders {
     public void setOrderTime(String orderTime) {
         this.orderTime = orderTime;
     }
-//    public void setOrderTime(String) {
-//        LocalDateTime myDateObj = LocalDateTime.now();
-//        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//        orderTime = myDateObj.format(myFormatObj);
-//    }
+
 }

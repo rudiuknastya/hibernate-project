@@ -4,55 +4,57 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
+import java.util.Set;
 
-public class ProductDaoImpl implements Dao<Product>{
+public class ShoppingCartDaoImpl implements ShoppingCartDao{
     @Override
-    public void addNewElement(Product product) {
+    public void addProduct(Long userId, Long productId) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        em.persist(product);
+        User foundUser = em.find(User.class, userId);
+        Product foundProduct = em.find(Product.class, productId);
+        foundUser.getProducts().add(foundProduct);
+        foundProduct.getUsers().add(foundUser);
         em.getTransaction().commit();
         em.close();
     }
 
     @Override
-    public List<Product> getAllElements() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
-        EntityManager em = emf.createEntityManager();
-        List<Product> products = em.createQuery("SELECT p FROM Product p", Product.class).getResultList();
-        em.close();
-        return products;
-    }
-
-    @Override
-    public Product getElementById(Long id) {
+    public void deleteProduct(Long userId, Long productId) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        Product product = em.find(Product.class, id);
-        em.getTransaction().commit();
-        return product;
-    }
-
-    @Override
-    public void updateElement(Product product) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        em.merge(product);
+        User foundUser = em.find(User.class, userId);
+        Product foundProduct = em.find(Product.class, productId);
+        foundUser.getProducts().remove(foundProduct);
+        foundProduct.getUsers().remove(foundUser);
         em.getTransaction().commit();
         em.close();
     }
 
     @Override
-    public void deleteElement(Long id) {
+    public List<Product> getUserProducts(Long userId) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        Product product = em.find(Product.class, id);
-        em.remove(product);
+        User user = em.find(User.class, userId);
+        List<Product> userProducts = user.getProducts();
+        userProducts.get(0);
         em.getTransaction().commit();
         em.close();
+        return user.getProducts();
+    }
+
+    @Override
+    public String deleteAllUserProducts(Long userId) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql-persistence");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        User foundUser = em.find(User.class, userId);
+        foundUser.getProducts().clear();
+        em.getTransaction().commit();
+        em.close();
+        return null;
     }
 }
